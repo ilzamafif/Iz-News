@@ -1,24 +1,20 @@
 import React from 'react';
-import { Link, Head } from '@inertiajs/inertia-react';
+import { Head } from '@inertiajs/inertia-react';
+import Navbar from '@/Components/Navbar';
+import NewsList from '@/Components/Homepage/NewsList';
+import Paginator from '@/Components/Homepage/Paginator';
 
 export default function Home(props) {
     return (
-        <>
+        <div className='min-h-screen bg-slate-50'>
             <Head title={props.title} />
-            <div className="flex justify-center item-center">
-                <div className="">
-                    {props.news ? props.news.map((data, i) => {
-                        return (
-                            <div key={i}>
-                                <p>{data.title}</p>
-                                <p>{data.category}</p>
-                                <p>{data.author}</p>
-                            </div>
-                        )
-                    }) : <p>Data Kosong</p>}
-                </div>
+            <Navbar />
+            <div className='flex justify-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch items-center gap-4 p-4'>
+                <NewsList news={props.news.data} />
             </div>
-
-        </>
+            <div className='flex justify-center items-center'>
+                <Paginator meta={props.news.meta} />
+            </div>
+        </div>
     )
 }
