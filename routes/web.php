@@ -18,26 +18,49 @@ use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
-| Landing Page
+| Home
 |--------------------------------------------------------------------------
 */
 
 Route::get('/', [NewsController::class, 'index']);
+
+/* --------------------------------------------------------------------------
+| Store
+|-------------------------------------------------------------------------- */
+
+Route::post('/news', [NewsController::class, 'store'])->middleware(['auth', 'verified']);
+
+/* --------------------------------------------------------------------------
+| Show
+|-------------------------------------------------------------------------- */
+
+Route::get('/news', [NewsController::class, 'show'])->middleware(['auth', 'verified']);
+
+/* --------------------------------------------------------------------------
+| Edit
+|-------------------------------------------------------------------------- */
+
+Route::get('/news/edit/', [NewsController::class, 'edit'])->middleware(['auth', 'verified'])->name('edit.news');
+
+/* --------------------------------------------------------------------------
+| Update
+|-------------------------------------------------------------------------- */
+
+Route::post('/news/update', [NewsController::class, 'update'])->middleware(['auth', 'verified']);
+
+/* --------------------------------------------------------------------------
+| Delete
+|-------------------------------------------------------------------------- */
+
+Route::post('/news/delete', [NewsController::class, 'destroy'])->middleware([
+    'auth', 'verified'
+])->name('delete.news');
 
 /*
 |--------------------------------------------------------------------------
 | Landing Page
 |--------------------------------------------------------------------------
 */
-
-Route::get('/welcome', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
